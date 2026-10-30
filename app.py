@@ -14,12 +14,14 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
-
 db = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),
-    database=os.getenv("DB_NAME")
+    database=os.getenv("DB_NAME"),
+    port=int(os.getenv("DB_PORT", 3306)),
+    ssl_ca=os.getenv("DB_SSL_CA"),
+    ssl_verify_cert=True
 )
 
 @app.route("/")

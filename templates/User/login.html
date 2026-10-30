@@ -1,0 +1,54 @@
+{% extends "User/base.html" %}
+{% block content %}
+<div class="login-section">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-icon">
+                <i class="bi bi-person-lock"></i>
+            </div>
+            <h2>Welcome Back</h2>
+            <p>log in to manage and track your parcels</p>
+        </div>
+        <div class="login-body">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category,message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('login')}}">
+                <div class="mb-4">
+                    <label for="email" class="form-label">  Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-envelope"></i>
+                        </span>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your Email" autocomplete="email" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" autocomplete="current-password" required>
+                </div>
+                </div>
+                <button type="submit" class="login-submit">
+                    Log In
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </form>
+            <p class="login-register">Don't Have an Account?
+                <a href="{{ url_for('register') }}">Create Account</a>
+            </p>
+            <div class="login-note">
+                <i class="bi bi-shield-check me-1"></i>
+                Your Account help to keep your parcel information organized
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "Admin/admin_base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Good Morning, {{ session["admin_name"] }}</h2>
+        <p class="text-muted mb-0">Here's what's happening with TrackForge today.</p>
+    </div>
+    <span class="badge bg-primary p-2">
+        <i class="bi bi-shield-check"></i> Admin
+    </span>
+</div>
+
+<!-- Statistics -->
+<div class="row g-3 mb-4">
+
+    <div class="col-md-3">
+        <div class="card stat p-3">
+            <small class="text-muted">Total Parcels</small>
+            <h2>{{ stats.total }}</h2>
+            <small>All shipments</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat orange p-3">
+            <small class="text-muted">Booked</small>
+            <h2>{{ stats.booked }}</h2>
+            <small>New bookings</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat p-3">
+            <small class="text-muted">In Transit</small>
+            <h2>{{ stats.in_transit }}</h2>
+            <small>On the way</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat green p-3">
+            <small class="text-muted">Delivered</small>
+            <h2>{{ stats.delivered }}</h2>
+            <small>Completed</small>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-4">
+
+    <!-- Recent shipments -->
+    <div class="col-lg-8">
+        <div class="card p-4">
+
+            <div class="d-flex justify-content-between mb-3">
+                <h5>Recent Shipments</h5>
+                <span class="text-primary">View All</span>
+            </div>
+
+            {% for parcel in recent_parcels %}
+            <div class="border-top py-3">
+
+                <div class="row">
+                    <div class="col">
+                        <small class="text-muted">Tracking ID</small>
+                        <div>{{ parcel.tracking_id }}</div>
+                    </div>
+
+                    <div class="col">
+                        <small class="text-muted">Customer</small>
+                        <div>{{ parcel.customer_name }}</div>
+                    </div>
+
+                    <div class="col">
+                        <small class="text-muted">Destination</small>
+                        <div>{{ parcel.destination }}</div>
+                    </div>
+
+                    <div class="col">
+                        <small class="text-muted">Status</small>
+                        <div>
+                            <span class="badge bg-warning text-dark">
+                                {{ parcel.status }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% else %}
+                <p class="text-muted mb-0">No shipments yet.</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="col-lg-4">
+        <div class="card p-4">
+
+            <h5 class="mb-3">Quick Actions</h5>
+
+            <div class="quick">
+
+                <a href="{{ url_for('admin_parcels') }}">
+                    <i class="bi bi-box-seam"></i>
+                    <b>Manage Parcels</b>
+                    <small>View all shipments</small>
+                </a>
+
+                <a href="{{ url_for('admin_parcels') }}">
+                    <i class="bi bi-geo-alt"></i>
+                    <b>Update Tracking</b>
+                    <small>Change shipment status</small>
+                </a>
+
+                <a href="{{ url_for('admin_parcels') }}">
+                    <i class="bi bi-people"></i>
+                    <b>View Customers</b>
+                    <small>Manage customer details</small>
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

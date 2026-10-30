@@ -1,0 +1,228 @@
+{% extends "User/base.html" %}
+{% block content %}
+
+<div class="dashboard-page">
+
+    <!-- Welcome -->
+    <section class="dashboard-welcome">
+
+        <div>
+            <span class="dashboard-tag">Customer Dashboard</span>
+
+            <h1>Welcome Back, {{ name }}!</h1>
+
+            <p>
+                Manage your parcels and keep track of every delivery
+            </p>
+        </div>
+
+        <a href="{{ url_for('book_parcel') }}" class="primary-btn">
+            <span>+</span>
+            Book a Parcel
+        </a>
+
+    </section>
+
+
+    <!-- Statistics -->
+    <section class="stats-grids">
+
+        <div class="stat-card">
+            <div class="stat-icon blue-icon"></div>
+            <p>Total Parcels</p>
+            <h2>{{ total }}</h2>
+            <span>All your shipments</span>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon orange-icon"></div>
+            <p>In Transit</p>
+            <h2>{{ in_transit }}</h2>
+            <span>Shipments on the way</span>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon purple-icon"></div>
+            <p>Pending</p>
+            <h2>{{ pending }}</h2>
+            <span>Awaiting processing</span>
+        </div>
+
+    </section>
+
+
+    <!-- Quick Actions -->
+    <section class="dashboard-section">
+
+        <div class="section-heading">
+            <h2>Quick Actions</h2>
+            <p>Everything you need to manage your shipments</p>
+        </div>
+
+        <div class="action-grid">
+
+            <a href="{{ url_for('book_parcel') }}" class="action-card">
+
+                <div class="action-icon"></div>
+
+                <h3>Book a Parcel</h3>
+
+                <p>
+                    Send a parcel to any destination
+                </p>
+
+                <span class="action-link">
+                    Create Booking →
+                </span>
+
+            </a>
+
+
+            <a href="{{ url_for('track_parcel') }}" class="action-card">
+
+                <div class="action-icon"></div>
+
+                <h3>Track a Parcel</h3>
+
+                <p>
+                    Check latest shipment status
+                </p>
+
+                <span class="action-link">
+                    Track Shipment
+                </span>
+
+            </a>
+
+
+            <a href="{{ url_for('my_parcels') }}" class="action-card">
+
+                <div class="action-icon"></div>
+
+                <h3>My Parcels</h3>
+
+                <p>
+                    View your parcel booking history
+                </p>
+
+                <span class="action-link">
+                    View Shipments
+                </span>
+
+            </a>
+
+        </div>
+
+    </section>
+
+<!-- Recent Shipments -->
+<section class="dashboard-section recent-section">
+
+    <div class="section-heading">
+        <h2>Recent Shipments</h2>
+        <p>Your latest parcel activity</p>
+    </div>
+
+    {% if recent_parcels %}
+
+        <div class="recent-list">
+
+            {% for parcel in recent_parcels %}
+
+                <div class="recent-item">
+
+                    <div>
+                        <strong>{{ parcel.tracking_id }}</strong>
+
+                        <p>
+                            To {{ parcel.destination }}
+                        </p>
+                    </div>
+
+                    <div>
+
+                        {% if parcel.status == "Delivered" %}
+
+                            <span class="status-badge delivered">
+                                Delivered
+                            </span>
+
+                        {% elif parcel.status == "In Transit" %}
+
+                            <span class="status-badge transit">
+                                In Transit
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge booked">
+                                {{ parcel.status }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <p class="text-muted">
+            No recent shipments yet.
+        </p>
+
+    {% endif %}
+
+    <a href="{{ url_for('my_parcels') }}" class="view-all">
+        View All
+    </a>
+
+</section>
+
+
+    <section class="assistant-banner">
+
+        <div class="assistant-symbol"></div>
+
+        <div class="assistant-content">
+
+            <span class="assistant-label">
+                TrackForge AI
+            </span>
+
+            <h2>Need help with your shipment?</h2>
+
+            <p>
+                Get assistance with parcel booking,
+                tracking and delivery questions.
+            </p>
+
+        </div>
+
+        <a href="{{ url_for('ai_assistant') }}" class="assistance-btn">
+            Ask AI Assistant
+        </a>
+
+    </section>
+
+
+    <!-- Footer -->
+    <div class="dashboard-footer">
+
+        <span>
+            TrackForge. Smarter Logistics, simpler deliveries
+        </span>
+
+        <a href="{{ url_for('logout') }}">
+            Log Out
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

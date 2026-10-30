@@ -1,0 +1,178 @@
+
+{% extends "user/base.html" %}
+{% block content %}
+
+<div class="container py-5">
+    <div class="booking-card mx-auto">
+        <div class="booking-heading text-center">
+            <div class="booking-icon">
+                <i class="bi bi-box-seam"></i>
+            </div>
+            <h2>Book a Parcel</h2>
+            <p>Send your parcel with TrackForge</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="voice-notice">
+            <i class="bi bi-mic"></i>
+            <span>Save time with voice input. Select a microphone
+            and speak clearly.</span>
+        </div>
+
+        <form method="POST">
+            <div class="mb-4">
+                <label for="receiver_name" class="form-label">
+                    Receiver Name
+                </label>
+                <div class="input-group">
+                    <input id="receiver_name" type="text"
+                           name="Receiver_name" class="form-control"
+                           placeholder="Enter receiver's full name"
+                           required>
+                    <button type="button" class="btn btn-outline-primary"
+                            onclick="startVoice('receiver_name')"
+                            aria-label="Speak receiver name">
+                        <i class="bi bi-mic-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="receiver_phone" class="form-label">
+                    Receiver Phone
+                </label>
+                <input id="receiver_phone" name="Receiver_phone"
+                       type="tel" class="form-control"
+                       placeholder="Enter receiver's contact number"
+                       required>
+                <small class="text-muted">
+                    Enter the number manually to avoid voice recognition errors.
+                </small>
+            </div>
+
+            <div class="mb-4">
+                <label for="origin" class="form-label">
+                    Pickup Address
+                </label>
+                <div class="input-group">
+                    <textarea id="origin" name="origin"
+                              class="form-control" rows="2"
+                              placeholder="Where should we collect the parcel?"
+                              required></textarea>
+                    <button type="button"
+                            class="btn btn-outline-primary voice-address-btn"
+                            onclick="startVoice('origin')"
+                            aria-label="Speak pickup address">
+                        <i class="bi bi-mic-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="destination" class="form-label">
+                    Delivery Address
+                </label>
+                <div class="input-group">
+                    <textarea id="destination" name="destination"
+                              class="form-control" rows="2"
+                              placeholder="Enter complete delivery address"
+                              required></textarea>
+                    <button type="button"
+                            class="btn btn-outline-primary voice-address-btn"
+                            onclick="startVoice('destination')"
+                            aria-label="Speak delivery address">
+                        <i class="bi bi-mic-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="Parcel_details" class="form-label">
+                    Parcel Description
+                </label>
+                <div class="input-group">
+                    <textarea id="Parcel_details" name="Parcel_details"
+                              class="form-control" rows="3"
+                              placeholder="Example: College documents in an envelope"
+                              required></textarea>
+                    <button type="button"
+                            class="btn btn-outline-primary voice-description-btn"
+                            onclick="startVoice('Parcel_details')"
+                            aria-label="Speak parcel description">
+                        <i class="bi bi-mic-fill"></i>
+                    </button>
+                </div>
+                <small class="text-muted">
+                    Describe what you are sending, such as books, clothes
+                    or documents. Do not include prohibited items.
+                </small>
+            </div>
+
+            <p id="voiceStatus" class="small text-primary"
+               role="status" aria-live="polite"></p>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100">
+                <i class="bi bi-check-circle me-2"></i>
+                Confirm Booking
+            </button>
+
+            <p class="text-center text-muted small mt-3 mb-0">
+                Please check the details before confirming your booking.
+            </p>
+        </form>
+    </div>
+</div>
+
+<script>
+function startVoice(fieldId) {
+    const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+    const status = document.getElementById("voiceStatus");
+
+    if (!SpeechRecognition) {
+        status.textContent =
+            "Voice input is not supported by this browser. Please type instead.";
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    status.textContent = "Listening... Please speak now.";
+
+    recognition.onresult = function(event) {
+        const spokenText = event.results[0][0].transcript;
+        const field = document.getElementById(fieldId);
+
+        field.value = field.value.trim()
+            ? field.value.trim() + " " + spokenText
+            : spokenText;
+
+        status.textContent = "Voice input added. Please verify the text.";
+    };
+
+    recognition.onerror = function() {
+        status.textContent =
+            "Voice input failed. Check microphone permission and try again.";
+    };
+
+    recognition.onend = function() {
+        if (status.textContent.startsWith("Listening")) {
+            status.textContent = "Voice input ended. Please check the field.";
+        }
+    };
+
+    recognition.start();
+}
+</script>
+
+{% endblock %}

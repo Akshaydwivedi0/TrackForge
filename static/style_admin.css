@@ -1,0 +1,186 @@
+/* =========================
+   ADMIN BASE
+========================= */
+
+body {
+    background: #f4f7fb;
+    color: #14213d;
+}
+
+.sidebar {
+    width: 220px;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #071a35;
+}
+
+.sidebar a {
+    display: block;
+    color: #b9c7dc;
+    text-decoration: none;
+    padding: 11px 18px;
+    margin: 4px 10px;
+    border-radius: 7px;
+}
+
+.sidebar a:hover,
+.sidebar .active {
+    background: #1672e8;
+    color: white;
+}
+
+.main {
+    margin-left: 220px;
+    padding: 30px;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.main .card {
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px #dfe5ee;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.stat {
+    border-left: 4px solid #1672e8 !important;
+}
+
+.stat.orange {
+    border-left-color: #f5a623 !important;
+}
+
+.stat.green {
+    border-left-color: #21a366 !important;
+}
+
+.stat h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 5px 0;
+}
+
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick a {
+    display: block;
+    padding: 14px 8px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: #14213d;
+}
+
+.quick a:hover {
+    background: #f8fafc;
+}
+
+.quick a i {
+    color: #1672e8;
+    margin-right: 8px;
+}
+
+.quick small {
+    display: block;
+    color: #718096;
+    margin-top: 3px;
+}
+
+
+/* =========================
+   PARCELS + CUSTOMERS TABLE
+========================= */
+
+.table th {
+    font-size: 13px;
+    color: #687386;
+    white-space: nowrap;
+}
+
+.table td {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.table select {
+    min-width: 120px;
+    font-size: 12px;
+}
+
+.table .btn {
+    font-size: 12px;
+}
+
+
+/* =========================
+   ADMIN LOGIN
+========================= */
+
+.admin-login-card {
+    max-width: 450px;
+    margin: 40px auto;
+}
+
+.admin-login-card .card {
+    border-radius: 18px;
+}
+
+.admin-login-icon {
+    font-size: 45px;
+    color: #0d6efd;
+    margin-bottom: 10px;
+}
+
+.admin-login-card .form-control {
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.admin-login-card .btn {
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        position: relative;
+    }
+
+    .sidebar a {
+        display: inline-block;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+}

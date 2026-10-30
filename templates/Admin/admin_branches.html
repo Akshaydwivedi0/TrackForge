@@ -1,0 +1,73 @@
+{% extends "Admin/admin_base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold mb-1">Branch Management</h2>
+        <p class="text-muted mb-0">
+            View TrackForge branches and locations.
+        </p>
+    </div>
+
+    <span class="badge bg-primary p-2">
+        {{ branches|length }} Branches
+    </span>
+
+</div>
+
+<div class="card p-4">
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Branch</th>
+                    <th>Location</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for branch in branches %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ branch.branch_name }}</strong>
+                    </td>
+
+                    <td>
+                        {{ branch.location }}
+                    </td>
+
+                    <td>
+                        {{ branch.phone or 'Not provided' }}
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td colspan="3"
+                        class="text-center text-muted py-4">
+                        No branches found.
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

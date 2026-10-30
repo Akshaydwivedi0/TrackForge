@@ -1,0 +1,258 @@
+{% extends "Admin/admin_base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold mb-1">Parcel Management</h2>
+        <p class="text-muted mb-0">
+            Manage shipments, agents and branches.
+        </p>
+    </div>
+
+    <span class="badge bg-primary p-2">
+        {{ parcels|length }} Parcels
+    </span>
+
+</div>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% for category, message in messages %}
+
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endwith %}
+
+
+<div class="card p-4">
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Tracking ID</th>
+                    <th>Customer</th>
+                    <th>Destination</th>
+                    <th>Agent</th>
+                    <th>Branch</th>
+                    <th>Status</th>
+                    <th>Assign</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+            {% for parcel in parcels %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ parcel.tracking_id }}</strong>
+                    </td>
+
+
+                    <td>
+                        {{ parcel.customer_name }}
+                    </td>
+
+
+                    <td>
+                        {{ parcel.destination }}
+                    </td>
+
+
+                    <td>
+
+                        {% if parcel.agent_name %}
+                            {{ parcel.agent_name }}
+                        {% else %}
+                            <span class="text-muted">
+                                Not assigned
+                            </span>
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if parcel.branch_name %}
+                            {{ parcel.branch_name }}
+                        {% else %}
+                            <span class="text-muted">
+                                Not assigned
+                            </span>
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge
+                            {% if parcel.status == 'Delivered' %}
+                                bg-success
+                            {% elif parcel.status == 'In Transit' %}
+                                bg-primary
+                            {% else %}
+                                bg-warning text-dark
+                            {% endif %}">
+
+                            {{ parcel.status }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- Assign Agent + Branch -->
+
+                    <td>
+
+                        <form method="POST"
+                              action="{{ url_for('assign_parcel',
+                              parcel_id=parcel.parcel_id) }}">
+
+                            <select name="agent_id"
+                                    class="form-select form-select-sm mb-2">
+
+                                <option value="">
+                                    Select Agent
+                                </option>
+
+                                {% for agent in agents %}
+
+                                    <option value="{{ agent.agent_id }}"
+                                        {% if parcel.agent_id == agent.agent_id %}
+                                            selected
+                                        {% endif %}>
+
+                                        {{ agent.name }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+
+                            <select name="branch_id"
+                                    class="form-select form-select-sm mb-2">
+
+                                <option value="">
+                                    Select Branch
+                                </option>
+
+                                {% for branch in branches %}
+
+                                    <option value="{{ branch.branch_id }}"
+                                        {% if parcel.branch_id == branch.branch_id %}
+                                            selected
+                                        {% endif %}>
+
+                                        {{ branch.branch_name }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-sm w-100">
+
+                                Assign
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+
+                    <!-- Update Status -->
+
+                    <td>
+
+                        <form method="POST"
+                              action="{{ url_for('update_status',
+                              parcel_id=parcel.parcel_id) }}">
+
+                            <select name="status"
+                                    class="form-select form-select-sm mb-2">
+
+                                <option value="Booked"
+                                    {% if parcel.status == "Booked" %}
+                                        selected
+                                    {% endif %}>
+                                    Booked
+                                </option>
+
+
+                                <option value="In Transit"
+                                    {% if parcel.status == "In Transit" %}
+                                        selected
+                                    {% endif %}>
+                                    In Transit
+                                </option>
+
+
+                                <option value="Delivered"
+                                    {% if parcel.status == "Delivered" %}
+                                        selected
+                                    {% endif %}>
+                                    Delivered
+                                </option>
+
+                            </select>
+
+
+                            <button type="submit"
+                                    class="btn btn-success btn-sm w-100">
+
+                                Update
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="8"
+                        class="text-center text-muted py-4">
+
+                        No parcels found.
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

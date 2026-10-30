@@ -1,0 +1,67 @@
+{% extends "User/base.html" %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    <section class="dashboard-welcome">
+
+        <div>
+            <span class="dashboard-tag">TrackForge AI</span>
+
+            <h1>AI Shipment Assistant</h1>
+
+            <p>
+                Ask questions about booking, tracking, delivery or payment.
+            </p>
+        </div>
+
+    </section>
+
+
+    <section class="dashboard-section">
+
+        <div class="card p-4">
+
+            <form method="POST">
+
+                <label class="form-label">
+                    What do you need help with?
+                </label>
+
+                <textarea
+                    name="question"
+                    class="form-control mb-3"
+                    rows="4"
+                    placeholder="Example: How can I track my parcel?"
+                    required></textarea>
+
+                <button type="submit" class="primary-btn">
+                    Ask TrackForge AI
+                </button>
+
+            </form>
+
+
+            {% if answer %}
+
+            <div class="mt-4 p-3"
+                 style="background:#f4f7fb; border-radius:10px;">
+
+                <strong>TrackForge AI</strong>
+
+                <p class="mb-0 mt-2">
+                    {{ answer }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "Admin/admin_base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold mb-1">Payment Management</h2>
+        <p class="text-muted mb-0">
+            View parcel payment records.
+        </p>
+    </div>
+
+    <span class="badge bg-primary p-2">
+        {{ payments|length }} Payments
+    </span>
+
+</div>
+
+
+<div class="card p-4">
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Tracking ID</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Payment Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for payment in payments %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ payment.tracking_id }}</strong>
+                    </td>
+
+                    <td>
+                        {{ payment.customer_name }}
+                    </td>
+
+                    <td>
+                        ₹{{ payment.amount }}
+                    </td>
+
+                    <td>
+                        {{ payment.method or 'Not provided' }}
+                    </td>
+
+                    <td>
+
+    <form method="POST"
+          action="{{ url_for('update_payment', payment_id=payment.payment_id) }}">
+
+        <select name="status"
+                class="form-select form-select-sm"
+                onchange="this.form.submit()">
+
+            <option value="pending"
+                {% if payment.status == 'pending' %}selected{% endif %}>
+                Pending
+            </option>
+
+            <option value="paid"
+                {% if payment.status == 'paid' %}selected{% endif %}>
+                Paid
+            </option>
+
+            <option value="failed"
+                {% if payment.status == 'failed' %}selected{% endif %}>
+                Failed
+            </option>
+
+        </select>
+
+    </form>
+
+</td>
+
+                    <td>
+                        {% if payment.payment_date %}
+                            {{ payment.payment_date.strftime('%d %b %Y, %I:%M %p') }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td colspan="6"
+                        class="text-center text-muted py-4">
+                        No payment records found.
+                    </td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

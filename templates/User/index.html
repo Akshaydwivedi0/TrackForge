@@ -1,0 +1,73 @@
+{% extends "User/base.html" %}
+{% block title %}
+Home - TrackForge
+{% endblock %}
+{% block content %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge bg-primary mb-3">
+                    Smart Courier management
+                </span>
+                <h1 class="display-4 fw-bold">Smarter Logistics<br> 
+                    for connected world </h1>
+                <p class="lead text-secondary mt-3">
+                    Book Parcel, track deliveries and manage
+                    shipment from one simple platform
+                </p>
+                <div class="mt-4">
+                    <a href="/book" class="btn btn-primary btn-lg me-2">
+                        <i class="bi bi-box-seam"></i>
+                        Book a Parcel
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 mt-4 mt-lg-0">
+                <div class="track-card p-4">
+                    <h4 class="fw-bold">Track Your Parcel</h4>
+                    <p class="text-secondary">
+                        Enter Your tracking ID to check delivery status
+                    </p>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="e.g. TRK1025">
+                        <button class="btn btn-primary">Track</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Everything You need</h2>
+            <p class="text-secondary">Simple tools managing your courier deliveries</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="track-card p-4 h-100 text-center">
+                    <i class="bi bi-box-seam fs-1 text-primary"></i>
+                    <h5 class="fw-bold mt-3">Easy Parcel Booking</h5>
+                    <p class="text-secondary">create and manage parcel booking quickly</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="track-card p-4 h-100 text-center">
+                    <i class="bi bi-geo-alt fs-1 text-primary"></i>
+                    <h5 class="fw-bold mt-3">Real Time Tracking</h5>
+                    <p class="text-secondary">Track the current status and location of parcels</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="track-card p-4 h-100 text-center">
+                    <i class="bi bi-shield check fs-1 text-primary"></i>
+                    <h5 class="fw-bold mt-3">Secure management</h5>
+                    <p class="text-secondary">manage customer and parcel information securely</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

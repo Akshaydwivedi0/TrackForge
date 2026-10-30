@@ -27,6 +27,29 @@ TrackForge is a web-based courier management system developed as an academic DBM
 - CSS
 - Bootstrap
 
+## Application Screenshots
+
+### Home Page
+![TrackForge Home](screenshots/home.png)
+
+### Customer Dashboard
+![User Dashboard](screenshots/User-dashboard.png)
+
+### Parcel Booking
+![Book Parcel](screenshots/Book-parcel.png)
+
+### Parcel Tracking
+![Track Parcel](screenshots/track-parcel.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/Admin-dashboard.png)
+
+### Admin Parcel Management
+![Admin Parcel](screenshots/Admin-parcel.png)
+
+### Admin Agents
+![Admin Agents](screenshots/Admin-agents.png)
+
 ## Project Structure
 
 ```text
